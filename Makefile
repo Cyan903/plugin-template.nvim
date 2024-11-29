@@ -1,7 +1,8 @@
-TESTS_INIT=tests/minimal_init.lua
-TESTS_DIR=tests/
+TESTS_INIT=lua/tests/minimal_init.lua
+TESTS_DIR=lua/tests/
+SOURCE_DIR=lua/plugin_name
 
-.PHONY: test
+.PHONY: test debug
 
 test:
 	@nvim \
@@ -9,3 +10,13 @@ test:
 		--noplugin \
 		-u ${TESTS_INIT} \
 		-c "PlenaryBustedDirectory ${TESTS_DIR} { minimal_init = '${TESTS_INIT}' }"
+
+debug:
+	@nvim \
+		-c "set rtp+=./"
+
+lint:
+	@luacheck ${SOURCE_DIR}
+
+format:
+	@stylua ${SOURCE_DIR}

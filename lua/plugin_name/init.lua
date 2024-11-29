@@ -1,24 +1,26 @@
 local module = require(... .. ".module")
 
----@class Config
----@field opt string Your config option
-local config = {
-    opt = "Hello!",
-}
-
----@class MyModule
+---@class PluginName
 local M = {}
+
+---@class Config
+---@field opt string Config option
+local config = {
+    opt = "Hello World!",
+}
 
 ---@type Config
 M.config = config
 
+---@class ExampleModule
+---@return string
+M.example = function()
+    return module.ex1(M.config.opt)
+end
+
 ---@param args Config?
 M.setup = function(args)
     M.config = vim.tbl_deep_extend("force", M.config, args or {})
-end
-
-M.hello = function()
-    return module.my_first_function(M.config.opt)
 end
 
 return M
